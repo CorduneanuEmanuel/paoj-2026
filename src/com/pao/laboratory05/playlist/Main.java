@@ -14,6 +14,6 @@ package com.pao.laboratory05.playlist;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Cerințele se află în Readme.md — secțiunea Exercise 1.");
+
     }
 }
