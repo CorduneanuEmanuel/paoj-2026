@@ -5,7 +5,7 @@ import java.util.Scanner;
 public interface IOperatiiCitireScriere {
     void citeste(Scanner in);
     void afiseaza();
-    String toContract();
+    String tipContract();
     default boolean areBonus(){
         return false;
     }
