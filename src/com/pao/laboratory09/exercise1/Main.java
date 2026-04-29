@@ -24,6 +24,36 @@ public class Main {
         //   [id] data tip: suma RON | contSursa -> contDestinatie
         //   Ex: [1] 2024-01-15 CREDIT: 1500.00 RON | RO01SRC1 -> RO01DST1
 
+        Scanner scanner = new Scanner(System.in);
+
+        List<Tranzactii> tranzactii = new ArrayList<>();
+
+//        System.out.print("N(nr tranzatctii): ");
+        int n = scanner.nextInt();
+
+        for(int i = 0; i < n; i++) {
+
+            int id = scanner.nextInt();
+
+            double suma = scanner.nextDouble();
+
+            String data = scanner.next();
+
+            String contSursa = scanner.next();
+
+            String contDestinatie = scanner.next();
+
+            String tip = scanner.next();
+
+            Tranzactii tranzactie = new Tranzactii(id, suma, data, contSursa, contDestinatie, tip);
+            tranzactii.add(tranzactie);
+
+        }
+
+
+//        System.out.print("")
+
+
         System.out.println("TODO: implementează exercițiul 1");
     }
 }
