@@ -31,6 +31,7 @@ public class Main {
 //        System.out.print("N(nr tranzatctii): ");
         int n = scanner.nextInt();
 
+
         for(int i = 0; i < n; i++) {
 
             int id = scanner.nextInt();
@@ -45,15 +46,92 @@ public class Main {
 
             String tip = scanner.next();
 
-            Tranzactii tranzactie = new Tranzactii(id, suma, data, contSursa, contDestinatie, tip);
+            Tranzactii tranzactie = new Tranzactii(id, suma, data, contSursa, contDestinatie, tip, "procesat");
             tranzactii.add(tranzactie);
+
+
 
         }
 
+        String FILE = "output/lab09_ex1.ser";
 
-//        System.out.print("")
 
 
-        System.out.println("TODO: implementează exercițiul 1");
+        File file = new File(FILE);
+        if (file.getParentFile() != null) {
+            file.getParentFile().mkdirs();
+        }
+
+
+        try(ObjectOutputStream e = new ObjectOutputStream(new FileOutputStream(FILE))){
+            e.writeObject(tranzactii);
+        }catch (IOException l){
+            l.printStackTrace();
+        }
+
+        ArrayList<Tranzactii> tranzactii2 = new ArrayList<>();
+        try(ObjectInputStream e = new ObjectInputStream(new FileInputStream(FILE))){
+            tranzactii2 = (ArrayList<Tranzactii>) e.readObject();
+        }
+        catch(IOException l){
+            l.printStackTrace();
+        }
+
+        while(scanner.hasNext()){
+            String comanda = scanner.next();
+            switch (comanda){
+                case "LIST":
+                {
+                    for(Tranzactii t : tranzactii2){
+                        System.out.println(t);
+                    }
+                    break;
+                }
+                case "FILTER":
+                {
+
+                    String data = scanner.next();
+                    boolean check = true;
+                    for(Tranzactii t : tranzactii2){
+                        if(t.getData().contains(data)){
+                            System.out.println(t);
+                            check = false;
+                        }
+                    }
+                    if(check){
+                        System.out.println("Niciun rezultat.");
+                    }
+                    break;
+                }
+                case "NOTE":
+                {
+                    int id = scanner.nextInt();
+                    boolean check = false;
+                    for(Tranzactii t : tranzactii2){
+                        if(id == t.getId() ){
+                            if(t.getNote() == null){
+                                System.out.println(String.format("NOTE[%d]: null", id));
+                            }
+                            else{
+                                System.out.println(String.format("NOTE[%d]: %s", id, t.getNote()));
+                            }
+                            check = true;
+                            break;
+                        }
+
+                    }
+                    if(!check){
+                        System.out.println(String.format("NOTE[%d]: not found", id));
+                    }
+                    break;
+                }
+            }
+        }
+
+
+
+
+
+        ;
     }
 }
