@@ -1,5 +1,4 @@
 package com.pao.laboratory10.exercise2;
-
 import com.pao.laboratory10.exercise1.Tranzactie;
 import com.pao.laboratory10.exercise1.TipTranzactie;
 
@@ -37,6 +36,77 @@ public class Main {
         // Format linie tranzacție: [id] data tip: suma RON
         //   Ex: [1] 2024-01-15 CREDIT: 1500.00 RON
 
-        System.out.println("TODO: implementează exercițiul 2");
+//        System.out.println("TODO: implementează exercițiul 2");
+
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Tranzactie> lista = new ArrayList<>();
+        int n = scanner.nextInt();
+        for(int i = 0; i < n; i++){
+            int id = scanner.nextInt();
+            double suma = scanner.nextDouble();
+            String data = scanner.next();
+            TipTranzactie tip = TipTranzactie.valueOf(scanner.next());
+
+        }
+
+        while(scanner.hasNext()){
+            String comanda = scanner.next();
+
+            switch(comanda){
+                case "UNIQUE_IDS" : {
+                    LinkedHashSet<Integer> set = new LinkedHashSet<>();
+                    for(var i : lista){
+                        set.add(i.getId());
+                    }
+                    System.out.printf("IDs unice %d: ", set.size());
+                    System.out.println(set);
+
+                    break;
+                }
+                case "MONTHLY_REPORT" : {
+                    TreeMap<String, double[]> sortare = new TreeMap<>();
+                    for(var i : lista){
+                        if(sortare.containsKey(i.toString())){
+                            double [] t  = sortare.get(i.toString());
+
+                        }
+                        else{
+                            double[] a = {0, 0};
+                            sortare.put(i.toString(), a);
+                        }
+                        sortare.put(i.toString(), i);
+                    }
+                    break;
+                }
+                case "TOP" : {
+
+                    break;
+                }
+                case "SORT_ASC" : {
+
+                    break;
+                }
+                case "SORT_DESC" : {
+
+                    break;
+                }
+                case "REVERSE" : {
+
+                    break;
+                }
+                case "MIN_MAX" : {
+
+                    break;
+                }
+                case "CME_DEMO" : {
+
+                    break;
+                }
+            }
+
+        }
     }
+
+
+
 }
