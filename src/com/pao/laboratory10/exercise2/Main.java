@@ -47,6 +47,8 @@ public class Main {
             String data = scanner.next();
             TipTranzactie tip = TipTranzactie.valueOf(scanner.next());
 
+            lista.add(new Tranzactie(id, suma, data, tip));
+
         }
 
         while(scanner.hasNext()){
@@ -58,48 +60,84 @@ public class Main {
                     for(var i : lista){
                         set.add(i.getId());
                     }
-                    System.out.printf("IDs unice %d: ", set.size());
-                    System.out.println(set);
+                    System.out.printf("IDs unice (%d): %s\n", set.size(), set);
+//                    System.out.println(set);
 
                     break;
                 }
                 case "MONTHLY_REPORT" : {
                     TreeMap<String, double[]> sortare = new TreeMap<>();
                     for(var i : lista){
-                        if(sortare.containsKey(i.toString())){
-                            double [] t  = sortare.get(i.toString());
+                        String luna = i.getData().substring(0, 7);
 
+                        if(!sortare.containsKey(luna)){
+//                            double [] t  = sortare.get(i.toString());
+                            sortare.put(luna, new double[]{0.0, 0.0});
+                        }
+
+                        double[] suma = sortare.get(luna);
+                        if(i.getTip() == TipTranzactie.CREDIT){
+                            suma[0] += i.getSuma();
                         }
                         else{
-                            double[] a = {0, 0};
-                            sortare.put(i.toString(), a);
+                            suma[1] += i.getSuma();
                         }
-                        sortare.put(i.toString(), i);
+
                     }
+
+                    for(Map.Entry<String, double[]> entry : sortare.entrySet()){
+                        System.out.printf("%s: CREDIT %.2f RON, DEBIT %.2f RON\n", entry.getKey(), entry.getValue()[0], entry.getValue()[1]);
+                    }
+
                     break;
                 }
                 case "TOP" : {
+                    int nn = scanner.nextInt();
+
+                    ArrayList<Tranzactie> copie = new ArrayList<>(lista);
+
+                    copie.sort((a, b) -> Double.compare(b.getSuma(), a.getSuma()));
+
+                    List<Tranzactie> sublista = copie.subList(0, Math.min(nn, copie.size()));
+                    for(var i : sublista){
+                        System.out.println(i);
+                    }
 
                     break;
                 }
                 case "SORT_ASC" : {
-
+                    lista.sort((a, b) -> Double.compare(a.getSuma(), b.getSuma()));
+                    for (var i : lista) {
+                        System.out.println(i);
+                    }
                     break;
                 }
                 case "SORT_DESC" : {
-
+                    lista.sort((a, b) -> Double.compare(b.getSuma(), a.getSuma()));
+                    for (var i : lista) {
+                        System.out.println(i);
+                    }
                     break;
                 }
                 case "REVERSE" : {
-
+                    Collections.reverse(lista);
+                    for (var i : lista) {
+                        System.out.println(i);
+                    }
                     break;
                 }
                 case "MIN_MAX" : {
-
+                    if (!lista.isEmpty()) {
+                        Tranzactie min = Collections.min(lista, (a, b) -> Double.compare(a.getSuma(), b.getSuma()));
+                        Tranzactie max = Collections.max(lista, (a, b) -> Double.compare(a.getSuma(), b.getSuma()));
+                        System.out.println("MIN: " + min);
+                        System.out.println("MAX: " + max);
+                    }
                     break;
                 }
                 case "CME_DEMO" : {
-
+                    try {  for (Tranzactie t : lista) lista.remove(t); }
+                    catch (ConcurrentModificationException e) { System.out.println("ConcurrentModificationException prins: modificare in iteratie detectata."); }
                     break;
                 }
             }
