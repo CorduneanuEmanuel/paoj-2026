@@ -332,6 +332,8 @@ public class Main {
                         }
                     }
 
+
+
                     if (restaurant == null) {
                         throw new RuntimeException("Restaurantul nu exista");
                     }
