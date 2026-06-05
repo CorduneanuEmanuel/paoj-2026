@@ -13,7 +13,12 @@ public abstract class Persoana {
     }
 //
 //    public Persoana(String nume){
-////        this.nume = nume;
+
+    public String getNume() {
+        return nume;
+    }
+
+    ////        this.nume = nume;
 ////        this.id = UUID.randomUUID();
 //    }
 
